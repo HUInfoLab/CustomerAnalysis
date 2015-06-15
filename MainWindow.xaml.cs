@@ -18,6 +18,8 @@ namespace Microsoft.Samples.Kinect.FaceBasics
     using System.Windows.Media.Media3D;
     using Microsoft.Kinect;
     using Microsoft.Kinect.Face;
+    using System.Windows.Controls;
+    using System.Windows.Shapes;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -659,6 +661,54 @@ namespace Microsoft.Samples.Kinect.FaceBasics
                 this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
                                                                 : Properties.Resources.SensorNotAvailableStatusText;
             }
+        }
+
+        private void TestGaze(object sender, RoutedEventArgs e)
+        {   
+            Canvas myCanvas = this.myCanvas;
+
+            //create LeftEye Variable for calculations
+            TextBox myLeftEye = this.myLeftEye;
+            double myLeftEyeVal = Convert.ToDouble(myLeftEye.Text);
+
+            //create RightEye Variable for calculations
+            TextBox myRightEye = this.myRightEye;
+            double myRightEyeVal = Convert.ToDouble(myRightEye.Text);
+
+            //create Yaw Variable for calculations
+            TextBox myYaw = this.myYaw;
+            double myYawVal = Convert.ToDouble(myYaw.Text);
+
+            //create Roll Variable for calculations
+            TextBox myRoll = this.myRoll;
+            double myRollVal = Convert.ToDouble(myRoll.Text);
+
+            //create Pitch Variable for calculations
+            TextBox myPitch = this.myPitch;
+            double myPitchVal = Convert.ToDouble(myPitch.Text);
+            
+           
+
+            // Create a red Ellipse.
+            Ellipse myEllipse = new Ellipse();
+
+            // Create a SolidColorBrush with a red color to fill the  
+            // Ellipse with.
+            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+
+            // Describes the brush's color using RGB values.  
+            // Each value has a range of 0-255.
+            mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
+            myEllipse.Fill = mySolidColorBrush;
+            myEllipse.StrokeThickness = 2;
+            myEllipse.Stroke = Brushes.Black;
+
+            // Set the width and height of the Ellipse.
+            myEllipse.Width = myRightEyeVal;
+            myEllipse.Height = myLeftEyeVal;
+            
+
+           myCanvas.Children.Add(myEllipse);
         }
     }
 }
