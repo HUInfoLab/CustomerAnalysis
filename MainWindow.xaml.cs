@@ -517,6 +517,8 @@ namespace Microsoft.Samples.Kinect.FaceBasics
                 {
                     drawingContext.DrawEllipse(null, drawingPen, new Point(pointF.X, pointF.Y), FacePointRadius, FacePointRadius);
                 }
+
+                
             }
 
             string faceText = string.Empty;
@@ -549,6 +551,18 @@ namespace Microsoft.Samples.Kinect.FaceBasics
                 faceText += "FaceYaw : " + yaw + "\n" +
                             "FacePitch : " + pitch + "\n" +
                             "FacenRoll : " + roll + "\n";
+                
+                //change values in text boxes for gaze analysis 
+                TextBox myYaw = this.myYaw;
+                TextBox myPitch = this.myPitch;
+                TextBox myRoll = this.myRoll;
+
+                //convert to strings for textbox input because this isn't javascript
+                myYaw.Text = Convert.ToString(yaw);
+                myPitch.Text = Convert.ToString(pitch);
+                myRoll.Text = Convert.ToString(roll);
+
+
             }
 
             // render the face property and face rotation information
@@ -677,15 +691,19 @@ namespace Microsoft.Samples.Kinect.FaceBasics
 
             //create Yaw Variable for calculations
             TextBox myYaw = this.myYaw;
-            //double myYawVal = Convert.ToDouble(myYaw.Text);
+            double myYawVal = Convert.ToDouble(myYaw.Text);
 
             //create Roll Variable for calculations
             TextBox myRoll = this.myRoll;
-            //double myRollVal = Convert.ToDouble(myRoll.Text);
+            double myRollVal = Convert.ToDouble(myRoll.Text);
 
             //create Pitch Variable for calculations
             TextBox myPitch = this.myPitch;
-            //double myPitchVal = Convert.ToDouble(myPitch.Text); 
+            double myPitchVal = Convert.ToDouble(myPitch.Text);
+
+            //create Angle Variable for calculations
+            TextBox myAngle = this.myAngle;
+            double myAngleVal = Convert.ToDouble(myAngle.Text);
 
             // Create a red Ellipse.
             Ellipse myEllipse = new Ellipse();            
@@ -697,7 +715,17 @@ namespace Microsoft.Samples.Kinect.FaceBasics
             // Describes the brush's color using RGB values.  
             // Each value has a range of 0-255.
             mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
-            myEllipse.Fill = mySolidColorBrush;
+
+            LinearGradientBrush linGrBrush = new LinearGradientBrush(
+                Color.FromArgb(255, 0, 0, 255), // Opaque blue
+                Color.FromArgb(255, 255, 0, 0), // Opaque red            
+                new Point(0, 10),
+                new Point(500, 500));
+                 
+
+
+
+            myEllipse.Fill = linGrBrush;
             myEllipse.StrokeThickness = 2;
             myEllipse.Stroke = Brushes.Black;  
 
@@ -706,16 +734,16 @@ namespace Microsoft.Samples.Kinect.FaceBasics
             myEllipse.Height = myLeftEyeVal;          
             
             //Set center distance from Right Side of the Panel
-            Canvas.SetRight(myEllipse, myLeftEyeVal);
+            Canvas.SetRight(myEllipse, myPitchVal);
 
             //Set center distance from Left Side of the Panel
-            Canvas.SetLeft(myEllipse, myLeftEyeVal);
+            Canvas.SetLeft(myEllipse, myRollVal);
 
             //Set center distance from Top of the Panel
-            Canvas.SetTop(myEllipse, myRightEyeVal);
+            Canvas.SetTop(myEllipse, myYawVal);
 
             //Set center distance from Top of the Panel
-            Canvas.SetBottom(myEllipse, myRightEyeVal);
+            Canvas.SetBottom(myEllipse, myAngleVal);
             
             //Draw Ellipse
             myCanvas.Children.Add(myEllipse);
