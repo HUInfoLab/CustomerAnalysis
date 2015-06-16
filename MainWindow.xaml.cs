@@ -677,21 +677,19 @@ namespace Microsoft.Samples.Kinect.FaceBasics
 
             //create Yaw Variable for calculations
             TextBox myYaw = this.myYaw;
-            double myYawVal = Convert.ToDouble(myYaw.Text);
+            //double myYawVal = Convert.ToDouble(myYaw.Text);
 
             //create Roll Variable for calculations
             TextBox myRoll = this.myRoll;
-            double myRollVal = Convert.ToDouble(myRoll.Text);
+            //double myRollVal = Convert.ToDouble(myRoll.Text);
 
             //create Pitch Variable for calculations
             TextBox myPitch = this.myPitch;
-            double myPitchVal = Convert.ToDouble(myPitch.Text);
-            
-           
+            //double myPitchVal = Convert.ToDouble(myPitch.Text); 
 
             // Create a red Ellipse.
-            Ellipse myEllipse = new Ellipse();
-
+            Ellipse myEllipse = new Ellipse();            
+            
             // Create a SolidColorBrush with a red color to fill the  
             // Ellipse with.
             SolidColorBrush mySolidColorBrush = new SolidColorBrush();
@@ -701,14 +699,26 @@ namespace Microsoft.Samples.Kinect.FaceBasics
             mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
             myEllipse.Fill = mySolidColorBrush;
             myEllipse.StrokeThickness = 2;
-            myEllipse.Stroke = Brushes.Black;
+            myEllipse.Stroke = Brushes.Black;  
 
             // Set the width and height of the Ellipse.
-            myEllipse.Width = myRightEyeVal;
-            myEllipse.Height = myLeftEyeVal;
+            myEllipse.Width = myRightEyeVal;          
+            myEllipse.Height = myLeftEyeVal;          
             
+            //Set center distance from Right Side of the Panel
+            Canvas.SetRight(myEllipse, myLeftEyeVal);
 
-           myCanvas.Children.Add(myEllipse);
+            //Set center distance from Left Side of the Panel
+            Canvas.SetLeft(myEllipse, myLeftEyeVal);
+
+            //Set center distance from Top of the Panel
+            Canvas.SetTop(myEllipse, myRightEyeVal);
+
+            //Set center distance from Top of the Panel
+            Canvas.SetBottom(myEllipse, myRightEyeVal);
+            
+            //Draw Ellipse
+            myCanvas.Children.Add(myEllipse);
         }
     }
 }
